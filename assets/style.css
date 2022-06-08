@@ -3,16 +3,17 @@
 }
 
 body {
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-family:Verdana, sans-serif;
     display: flex;
     flex-direction: column;
 }
 
 /* Main Header Section - contains view high score link on left, and timer on right */
 body > header {
-    display: flex;
+    display: flex; 
+    flex-direction: row;
 }
-
+/* Align the highScores button to the left */
 #highScores {
     margin-right: auto;
 }
@@ -34,23 +35,18 @@ main {
     margin-top: 20px;
     margin-bottom:20px;
 }
-/* Spreads the buttons out */
+/* Spreads all elements in the quiz area out */ --- 
 #quiz > * {
     margin-top: 20px;
     margin-bottom: 20px;
     text-align: center;
 } 
 /* aligns the buttons vertically */
-#quizanswer {
+#quizAnswer {
     display: flex;
     flex-direction: column;
 }
-/* #quizanswer button {
-    align-items: flex-start;
-    margin:10px;
-    text-align: left;
-} */
-
+/* Bottom buttons, align horizontally */
 #buttons {
     display: flex;
     flex-direction: row;
@@ -66,17 +62,12 @@ button {
     color: white;
     border-radius: 10px;
     box-shadow: 1px 1px 10px 2px #33054a;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top:5px;
-    padding-bottom: 5px;
+    padding: 5px 10px 5px 10px;
     margin: 5px;
-    /* margin-right: 5px; */
     text-align: center;
 }
 
-button:hover,
-li:hover {
+button:hover {
     box-shadow: 1px 1px 10px 2px #a81af0;
     color: yellow;
 }
