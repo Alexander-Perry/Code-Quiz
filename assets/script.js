@@ -5,6 +5,7 @@ var quizAnswer = document.getElementById("quizAnswer");
 var highScorebtn = document.getElementById("highScores");
 var timeleft = document.getElementById("timer");
 var HighScores = JSON.parse(localStorage.getItem("HighScores"));
+var hsExecuted = false; //Triggers high scores button to only trigger once - high score return reloads the page flagging this false again. 
 var q, score, timerInterval, secondsLeft; // Globals Used in multiple functions
 
 // Quiz Questions - array item stores the data for each question
@@ -142,7 +143,11 @@ function DisplayScore() {
 };
 
 // Display High Scores
+
 function ShowHighScores() {
+    if (hsExecuted) { //Stops reloading the high score page if the button is clicked again.
+        return;
+    };
     clearInterval(timerInterval); //stops the timer if it's still running
     timeleft.textContent = "60 seconds";
     startQuiz.style.display = "none"; //Hide the start-quiz button (replaced by return)
@@ -160,13 +165,15 @@ function ShowHighScores() {
         ScoreEntry.textContent = element[0] + " : " + element[1];
     });
 
-    //Clear Score Button
-    var returnBtn = document.createElement("button");
+    //Create the buttons
+    var returnBtn = document.createElement("button"); //Return Button
     returnBtn.textContent = "Return";
     document.getElementById("buttons").appendChild(returnBtn);
-    var clearScorebtn = document.createElement("button");
+
+    var clearScorebtn = document.createElement("button"); //Clear High Scores button
     clearScorebtn.textContent = "Clear High Scores";
     document.getElementById("buttons").appendChild(clearScorebtn);
+
     // Event listener for clearScorebtn
     clearScorebtn.addEventListener("click", function () {
         localStorage.removeItem("HighScores"); //clear HighScores from localstorage and remove the list. 
@@ -176,4 +183,5 @@ function ShowHighScores() {
     returnBtn.addEventListener("click", function () {
         location.reload(); ///nice and simple page reload. 
     });
+    hsExecuted = true;
 };
