@@ -103,7 +103,7 @@ quizAnswer.addEventListener('click', function (event) {
     var dataIndex = element.getAttribute("data-index");
     if (dataIndex == questions[q].correctAnswer) {
         score++;
-    }else {secondsLeft -=10};
+    } else { secondsLeft -= 10 };
     q++;
     ShowQuestion(q);
 });
@@ -150,15 +150,16 @@ function ShowHighScores() {
     quizAnswer.textContent = "";
     var ScoreList = document.createElement("ol");
     quizAnswer.appendChild(ScoreList);
-    // read and load in the high scores from localstorage;
-    HighScores = JSON.parse(localStorage.getItem("HighScores"));
-    /// Insert function here to sort via value.... 
-    // var SortedHighScores = Object.entries(a,b)
-    for (var key in HighScores) {
+    HighScores = JSON.parse(localStorage.getItem("HighScores"));    // read and load in the high scores from localstorage;
+
+    // Sort Highscores by value and create list items for each.  
+    var SortedHighScores = Object.entries(HighScores).sort((a, b) => b[1] - a[1]); //Sorts HighScores by value and converts to array. 
+    SortedHighScores.forEach(element => { //loop through each HighScore element and create list item. 
         var ScoreEntry = document.createElement("li");
         ScoreList.appendChild(ScoreEntry);
-        ScoreEntry.textContent = key + ": " + HighScores[key];
-    };
+        ScoreEntry.textContent = element[0] + " : " + element[1];
+    });
+
     //Clear Score Button
     var returnBtn = document.createElement("button");
     returnBtn.textContent = "Return";

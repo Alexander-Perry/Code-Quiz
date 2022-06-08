@@ -1,21 +1,27 @@
 * {
-   box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-    font-family:Verdana, sans-serif;
+    font-family: Verdana, sans-serif;
     display: flex;
     flex-direction: column;
 }
 
 /* Main Header Section - contains view high score link on left, and timer on right */
-body > header {
-    display: flex; 
+body>header {
+    display: flex;
     flex-direction: row;
 }
+
 /* Align the highScores button to the left */
 #highScores {
     margin-right: auto;
+}
+
+#timer {
+    font-weight: bold;
+    margin-right: 20px;
 }
 
 /* Main Quiz area */
@@ -27,25 +33,29 @@ main {
     margin-left: auto;
     margin-right: auto;
 }
+
 /* make the quiz area its own container */
 #quiz {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
-/* Spreads all elements in the quiz area out */ --- 
-#quiz > * {
+
+/* Spreads all elements in the quiz area out */
+--- #quiz>* {
     margin-top: 20px;
     margin-bottom: 20px;
     text-align: center;
-} 
+}
+
 /* aligns the buttons vertically */
 #quizAnswer {
     display: flex;
     flex-direction: column;
 }
+
 /* Bottom buttons, align horizontally */
 #buttons {
     display: flex;
@@ -70,4 +80,20 @@ button {
 button:hover {
     box-shadow: 1px 1px 10px 2px #a81af0;
     color: yellow;
+}
+
+ol {
+    padding-inline: 10px;
+    list-style-position: inside;
+    background-color: lavender;
+}
+
+li {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+li::marker {
+    content: "Rank " counter(list-item) ": ";
+    font-weight: bold;
 }
