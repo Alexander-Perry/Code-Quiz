@@ -13,7 +13,6 @@ body > header {
     display: flex;
 }
 
-
 #highScores {
     margin-right: auto;
 }
@@ -46,10 +45,16 @@ main {
     display: flex;
     flex-direction: column;
 }
-#quizanswer button {
+/* #quizanswer button {
     align-items: flex-start;
     margin:10px;
     text-align: left;
+} */
+
+#buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 h1 {
@@ -65,4 +70,13 @@ button {
     padding-right: 10px;
     padding-top:5px;
     padding-bottom: 5px;
+    margin: 5px;
+    /* margin-right: 5px; */
+    text-align: center;
+}
+
+button:hover,
+li:hover {
+    box-shadow: 1px 1px 10px 2px #a81af0;
+    color: yellow;
 }

@@ -4,6 +4,9 @@ var quizanswer = document.getElementById("quizanswer");
 var q = 0; // Question Number count
 var score = 0; // Start with a score of zero, +5 per correct answer
 var HighScores = JSON.parse(localStorage.getItem("HighScores"));
+var highScorebtn = document.getElementById("highScores");
+var timerInterval;
+var secondsLeft = 60;
 
 // Quiz Questions - array item stores the data for each question
 var questions = [
@@ -68,12 +71,32 @@ function ShowQuestion(q) {
 };
 
 // Event for the "Start Quiz" being clicked.
-// Resets question count and score to 0, hides the startQuiz button and starts the quiz. 
+// Resets question count and score to 0, hides the startQuiz button and starts the quiz.
+
+function StartTimer(){
+  timerInterval = setInterval(function() {
+    document.getElementById("timer").textContent = secondsLeft + " seconds remaining";
+    secondsLeft--;
+
+    if(secondsLeft === 0 ) {
+      // Stops execution of action at set interval
+      clearInterval(timerInterval);
+      // Calls function to create and append image
+      DisplayScore();
+    }
+    
+  }, 1000);
+};
+
 startQuiz.addEventListener('click', function () {
+   
+        clearScorebtn="";
+
     q = 0; // reset the question count to 0
     score = 0;
     this.style.display = "none";
-    ShowQuestion(q)
+    StartTimer();
+    ShowQuestion(q);
 });
 
 // Event for Answer buttons being pressed. Matches up if the selected answer is the correct answer listed in the object. 
@@ -92,8 +115,12 @@ quizanswer.addEventListener('click', function (event) {
     ShowQuestion(q);
 });
 
+highScorebtn.addEventListener("click", ShowHighScores);
+
+
 //Display final score, allow player to save high score, go to high score page on save, or restart. 
 function DisplayScore() {
+    clearInterval(timerInterval);
     quizquestion.textContent = "Well Done!";
     quizanswer.textContent = "Your Final Score is: " + score + "/" + Object.keys(questions).length; //Display the player's final score (with how many were correct)
 
@@ -113,17 +140,41 @@ function DisplayScore() {
         };
         HighScores[initials] = score;
         localStorage.setItem("HighScores", JSON.stringify(HighScores));
-        // Create High Score Function
         ShowHighScores();
     }
     );
-
-    function ShowHighScores(){
-        quizquestion.textContent = "High Scores";
-        quizanswer.textContent = "Scorez";
-        // Need to load in the HighScores object. 
-    }
-    //----
+    
     startQuiz.style.display = "block";
     return;
-}
+};
+
+function ShowHighScores() {
+    startQuiz.style.display = "none"; //Hide the start-quiz button (replaced by return)
+    quizquestion.textContent = "High Scores";
+    quizanswer.textContent = "";
+    var ScoreList = document.createElement("ol");
+    quizanswer.appendChild(ScoreList);
+    // read and load in the high scores from localstorage;
+    HighScores = JSON.parse(localStorage.getItem("HighScores"));
+     for (var key in HighScores){
+         var ScoreEntry = document.createElement("li");
+         ScoreList.appendChild(ScoreEntry);
+         ScoreEntry.textContent = key + ": " + HighScores[key];
+     };
+     //Clear Score Button
+     var returnBtn = document.createElement("button");
+     returnBtn.textContent = "Return";
+     document.getElementById("buttons").appendChild(returnBtn);
+     var clearScorebtn = document.createElement("button");
+     clearScorebtn.textContent = "Clear High Scores";
+     document.getElementById("buttons").appendChild(clearScorebtn);
+     // Event listener for clearScorebtn
+     clearScorebtn.addEventListener("click", function (){
+         localStorage.removeItem("HighScores"); //clear HighScores from localstorage and remove the list. 
+         HighScores = {};
+         ScoreList.textContent="";
+     }); 
+     returnBtn.addEventListener("click", function() {
+         location.reload(); ///nice and simple page reload. 
+     });
+};
