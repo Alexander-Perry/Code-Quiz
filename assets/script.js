@@ -158,12 +158,14 @@ function ShowHighScores() {
     HighScores = JSON.parse(localStorage.getItem("HighScores"));    // read and load in the high scores from localstorage;
 
     // Sort Highscores by value and create list items for each.  
-    var SortedHighScores = Object.entries(HighScores).sort((a, b) => b[1] - a[1]); //Sorts HighScores by value and converts to array. 
-    SortedHighScores.forEach(element => { //loop through each HighScore element and create list item. 
-        var ScoreEntry = document.createElement("li");
-        ScoreList.appendChild(ScoreEntry);
-        ScoreEntry.textContent = element[0] + " : " + element[1];
-    });
+    if (HighScores != null) { //Ensure HighScores exists 
+        var SortedHighScores = Object.entries(HighScores).sort((a, b) => b[1] - a[1]); //Sorts HighScores by value and converts to array. 
+        SortedHighScores.forEach(element => { //loop through each HighScore element and create list item. 
+            var ScoreEntry = document.createElement("li");
+            ScoreList.appendChild(ScoreEntry);
+            ScoreEntry.textContent = element[0] + " : " + element[1];
+        });
+    };
 
     //Create the buttons
     var returnBtn = document.createElement("button"); //Return Button
